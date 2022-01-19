@@ -15,16 +15,16 @@ import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.stats import beta
 
-norms2 = pd.read_csv("FILE HERE")
-norms3 = pd.read_csv("FILE HERE")
+norms2 = pd.read_csv("/Users/aaronbaker/Documents/Cooperation Lab/Norms/norms_s2_clean.csv")
+norms3 = pd.read_csv("/Users/aaronbaker/Documents/Cooperation Lab/Norms/norms_s3_clean.csv")
 
 # Parameters: EDIT THESE based on the different results you would like to see.
 p_strong = 0.8
 p_weak = 0.2
-batch_size = 20
-num_batches = 1
+batch_size = 5
+num_batches = 3
 norm_type = "descriptive"
-strong_weak = "strong"
+strong_weak = "weak"
 
 # Parameters: Shape parameters that affect the granularity of the distributions.
 xvalues = np.linspace(0, 1.0, 100)
@@ -48,7 +48,7 @@ class Beta():
         mean = self.proportion_prior.mean()
         var = self.proportion_prior.var()
         self.a = mean * ((mean * (1-mean) / var) - 1)
-        self.b = (1-mean) * ((mean * (1-mean) / var) - 1)
+        self.b = (self.a * (1 - mean)) / mean
     
     def fit_mle(self):
         """ Set parameters for a beta distribution using SELF.DATA grouped into SELF.BINS."""
@@ -131,8 +131,6 @@ for vign in vignettes:
     plot_beliefs(vignettes, vign, num_batches, batch_size, p_strong if strong_weak=="strong" else p_weak)
     plot_hist(vignettes, vign)
 plt.show()
-
-
 
 
 """ OTHER FUNCTIONS """
