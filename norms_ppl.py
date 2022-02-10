@@ -56,21 +56,21 @@ with pm.Model() as model:
     
     """Estimating probabilities over transform parameters K and C that interact with the prior incunctive
     rating Beta distribution INJUNCTIVE and the discriptive norm information OBSERVED."""
-    #k = pm.Beta('k', mu=0)
-    #c = pm.Beta('c')
-    #injunctive = pm.Beta('injuctive', mu=np.mean(ex_prior)/100, sigma=np.std(ex_prior)/100)
-    #descriptive = pm.Beta('descriptive', mu=k*injunctive + c, sigma=0.5, observed = descriptive_obs)
+    k = pm.Beta('k', mu=0)
+    c = pm.Beta('c')
+    injunctive = pm.Beta('injuctive', mu=np.mean(ex_prior)/100, sigma=np.std(ex_prior)/100)
+    descriptive = pm.Beta('descriptive', mu=k*injunctive + c, sigma=0.5, observed = descriptive_obs)
     
     """Modeling the posterior distribution as a binomial distribution (N observtions with OBS 
     success rate) instead of a beta distribution."""
-    # descriptive = pm.Binomial('likelihood', p = pm.math.sigmoid(k * injunctive + C),
-    #  n = N, obs = descriptive_obs)
+    #descriptive = pm.Binomial('likelihood', p = pm.math.sigmoid(k * injunctive + C),
+    #n = N, obs = descriptive_obs)
 
     """Tester of pymc3 mechanics."""
-    k = pm.Constant('k', 1)
-    c = pm.Constant('c', 0)
-    mean = pm.Normal("mean", mu=0, sigma=1)
-    desc = pm.Normal("descriptive", mu=k*mean + c, sigma=1)
+    #k = pm.Constant('k', 1)
+    #c = pm.Constant('c', 0)
+    #mean = pm.Normal("mean", mu=0, sigma=1)
+    #desc = pm.Normal("descriptive", mu=k*mean + c, sigma=1)
 
 
     trace = pm.sample(5000, tune=1000, progressbar=True, return_inferencedata=True)
